@@ -1,5 +1,7 @@
+import '@fontsource-variable/geist/wght.css'
+
 const App: React.FC = () => {
-  return <h1>App</h1>
+  return <h1>app</h1>
 }
 
 export default App
