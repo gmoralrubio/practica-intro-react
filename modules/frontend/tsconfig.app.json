@@ -23,8 +23,10 @@
 
 		"strict": true,
 		"paths": {
-			"@/*": ["./src/*"],
-			"@assets/*": ["./src/assets/*"]
+			"@*": ["./src/*"],
+			"@assets/*": ["./src/assets/*"],
+			"@features/*": ["./src/features/*"],
+			"@shared/*": ["./src/shared/*"]
 		},
 		"allowUnusedLabels": true,
 		"noUncheckedSideEffectImports": true,
