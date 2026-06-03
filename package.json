@@ -1,16 +1,21 @@
 {
-  "name": "practica-final",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "workspaces": [
+	"name": "practica-final",
+	"version": "1.0.0",
+	"description": "Repositorio con la práctica final del módulo Fundamentos React.",
+	"main": "index.js",
+	"workspaces": [
 		"modules/*"
 	],
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "module"
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"dev:backend": "npm run start --workspace=modules/backend",
+		"dev:frontend": "npm run dev --workspace=modules/frontend",
+		"lint:frontend": "npm run lint --workspace=modules/frontend",
+		"build:frontend": "npm run build --workspace=modules/frontend",
+		"preview:frontend": "npm run preview --workspace=modules/frontend"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"type": "module"
 }
