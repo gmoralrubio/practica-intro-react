@@ -1,5 +1,3 @@
-const ProductDetailPage: React.FC = () => {
+export const ProductDetailPage: React.FC = () => {
   return <h1>Product Detail Page</h1>
 }
-
-export default ProductDetailPage
