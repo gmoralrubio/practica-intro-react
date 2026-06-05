@@ -1,5 +1,14 @@
 import { createBrowserRouter, redirect } from 'react-router'
 import AppLayout from '@features/App/AppLayout'
+import { lazy, Suspense } from 'react'
+import { ProductListLoadingPage } from '@features/Products/views/ProductListLoadingPage'
+
+const ProductListPage = lazy(
+  () => import('@features/Products/views/ProductListPage')
+)
+const ProductDetailPage = lazy(
+  () => import('@features/Products/views/ProductDetailPage')
+)
 
 export const router = createBrowserRouter([
   {
@@ -11,21 +20,19 @@ export const router = createBrowserRouter([
         children: [
           {
             index: true,
-            lazy: {
-              Component: async () =>
-                (await import('@features/Products/views/ProductListPage'))
-                  .ProductListPage,
-            },
-            HydrateFallback: () => <p>Loading...</p>,
+            element: (
+              <Suspense fallback={<ProductListLoadingPage />}>
+                <ProductListPage />
+              </Suspense>
+            ),
           },
           {
             path: ':productId',
-            lazy: {
-              Component: async () =>
-                (await import('@features/Products/views/ProductDetailPage'))
-                  .ProductDetailPage,
-            },
-            HydrateFallback: () => <p>Loading...</p>,
+            element: (
+              <Suspense fallback={<p>Loading...</p>}>
+                <ProductDetailPage />
+              </Suspense>
+            ),
           },
         ],
       },

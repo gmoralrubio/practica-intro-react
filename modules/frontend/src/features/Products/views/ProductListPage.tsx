@@ -1,7 +1,7 @@
 import { ProductCard } from '@features/Products/components/ProductCard'
 import { useProducts } from '@features/Products/hooks/useProducts'
 
-export const ProductListPage: React.FC = () => {
+const ProductListPage: React.FC = () => {
   const { products } = useProducts()
 
   return (
@@ -15,3 +15,4 @@ export const ProductListPage: React.FC = () => {
     </main>
   )
 }
+export default ProductListPage
