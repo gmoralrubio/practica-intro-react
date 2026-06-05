@@ -45,10 +45,7 @@ export const productRepository = {
 		return mapProduct(data)
 	},
 
-	updateProduct: async (
-		id: string,
-		product: ProductUpdateDTO
-	): Promise<Product> => {
+	updateProduct: async (id: string, product: Product): Promise<Product> => {
 		const response = await fetch(`${API_URL}/${id}`, {
 			method: 'PATCH',
 			headers: {
