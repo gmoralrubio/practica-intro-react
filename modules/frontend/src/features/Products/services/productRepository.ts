@@ -47,7 +47,7 @@ export const productRepository = {
 
 	updateProduct: async (id: string, product: Product): Promise<Product> => {
 		const response = await fetch(`${API_URL}/${id}`, {
-			method: 'PATCH',
+			method: 'PUT',
 			headers: {
 				'Content-Type': 'application/json',
 				Authorization: `Bearer ${token}`,
