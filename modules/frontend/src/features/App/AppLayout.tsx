@@ -6,9 +6,7 @@ const AppLayout: React.FC = () => {
   return (
     <div className="font-primary container mx-auto max-w-7xl">
       <Header />
-      <main className="min-h-screen p-6">
-        <Outlet />
-      </main>
+      <Outlet />
       <Footer />
     </div>
   )
