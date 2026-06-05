@@ -2,7 +2,7 @@ export type Tag = 'sport' | 'home' | 'tech' | 'Unknown'
 
 // Domain
 export interface Product {
-	id: number
+	id: string
 	name: string
 	description: string
 	price: number
@@ -14,7 +14,7 @@ export interface Product {
 }
 
 // Se envía a API en creación producto
-export interface CreateProductDTO {
+export interface ProductCreateDTO {
 	name: string
 	description: string
 	price: number
@@ -28,7 +28,7 @@ export type ProductUpdateDTO = Partial<Product>
 
 // Respuesta API
 export interface ProductResponseDTO {
-	id: number
+	id: string
 	name: string
 	description: string
 	price: number

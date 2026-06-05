@@ -1,5 +1,8 @@
-import type { Product, Tag } from '@features/Products/types/ProductTypes'
-import type { ProductDTO } from '@features/Products/types/ProductDTO'
+import type {
+	Product,
+	ProductResponseDTO,
+	Tag,
+} from '@features/Products/types/product.types'
 
 const TAGS: Tag[] = ['sport', 'home', 'tech']
 
@@ -9,7 +12,7 @@ const isTag = (value: string): value is Tag => {
 const mapTags = (apiTags: string[]): Tag[] => {
 	return apiTags.filter(isTag)
 }
-export function mapProduct(dto: ProductDTO): Product {
+export function mapProduct(dto: ProductResponseDTO): Product {
 	return {
 		id: dto.id,
 		name: dto.name,
