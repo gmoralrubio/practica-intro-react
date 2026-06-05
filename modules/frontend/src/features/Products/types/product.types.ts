@@ -6,7 +6,7 @@ export interface Product {
 	name: string
 	description: string
 	price: number
-	image: string
+	image?: string
 	isOnSale: boolean
 	userId: number
 	tags: Tag[]
@@ -18,13 +18,10 @@ export interface ProductCreateDTO {
 	name: string
 	description: string
 	price: number
-	image: string
+	image?: string
 	isOnSale: boolean
 	tags: string[]
 }
-
-// Se envía a API en edición producto
-export type ProductUpdateDTO = Partial<Product>
 
 // Respuesta API
 export interface ProductResponseDTO {
@@ -32,7 +29,7 @@ export interface ProductResponseDTO {
 	name: string
 	description: string
 	price: number
-	image: string
+	image?: string
 	isOnSale: boolean
 	userId: number
 	tags: string[]
