@@ -1,0 +1,45 @@
+import type { Product } from '@features/Products/types/product.types'
+import { toEuro } from '@features/Products/utils/utils'
+
+interface Props {
+  product: Product
+}
+
+export const ProductCard: React.FC<Props> = ({ product }) => {
+  return (
+    <div className="card bg-base-100 shadow-sm">
+      <figure className="relative">
+        <span>
+          {product.isOnSale && (
+            <div className="badge badge-secondary absolute top-4 right-4 font-bold">
+              Oferta
+            </div>
+          )}
+        </span>
+        <img
+          className="aspect-square object-cover"
+          src={product.image}
+          alt={product.name}
+        />
+      </figure>
+      <div className="card-body">
+        <h2 className="card-title">{product.name}</h2>
+        <p className="text-2xl">{toEuro(product.price)}</p>
+        <p>{product.description}</p>
+        <div className="card-actions items-center justify-between">
+          <button className="btn btn-primary">Ver producto</button>
+          <div className="space-x-2">
+            {product.tags?.map((tag) => (
+              <div
+                key={tag}
+                className="badge badge-soft badge-accent"
+              >
+                {tag}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
