@@ -3,7 +3,6 @@ import type {
 	Product,
 	ProductCreateDTO,
 	ProductResponseDTO,
-	ProductUpdateDTO,
 } from '@features/Products/types/product.types'
 
 const API_URL = 'http://localhost:8000/products'
