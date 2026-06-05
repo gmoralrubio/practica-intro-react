@@ -29,7 +29,7 @@ export const productRepository = {
 		return mapProduct(data)
 	},
 
-	addProduct: async (product: ProductCreateDTO): Promise<Product[]> => {
+	addProduct: async (product: ProductCreateDTO): Promise<Product> => {
 		const response = await fetch(API_URL, {
 			method: 'POST',
 			headers: {
@@ -41,8 +41,8 @@ export const productRepository = {
 		if (!response.ok) {
 			throw new Error(`HTTP ${response.status}: ${response.statusText}`)
 		}
-		const data: ProductResponseDTO[] = await response.json()
-		return data.map(mapProduct)
+		const data: ProductResponseDTO = await response.json()
+		return mapProduct(data)
 	},
 
 	updateProduct: async (
