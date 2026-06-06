@@ -9,9 +9,9 @@ interface UseProducts {
 	products: Product[]
 	error: Error | null
 	isLoading: boolean
-	handleAddProduct: (product: ProductCreateDTO) => void
-	handleUpdateProduct: (product: Product) => void
-	handleDeleteProduct: (id: string) => void
+	addProduct: (product: ProductCreateDTO) => Promise<void>
+	updateProduct: (product: Product) => Promise<void>
+	deleteProduct: (id: string) => Promise<void>
 }
 
 export const useProducts = (): UseProducts => {
@@ -36,9 +36,7 @@ export const useProducts = (): UseProducts => {
 		loadProducts()
 	}, [])
 
-	const handleAddProduct = async (
-		product: ProductCreateDTO
-	): Promise<void> => {
+	const addProduct = async (product: ProductCreateDTO): Promise<void> => {
 		try {
 			setIsLoading(true)
 			const newProduct = await productRepository.addProduct(product)
@@ -53,7 +51,7 @@ export const useProducts = (): UseProducts => {
 		}
 	}
 
-	const handleUpdateProduct = async (product: Product): Promise<void> => {
+	const updateProduct = async (product: Product): Promise<void> => {
 		try {
 			setIsLoading(true)
 			const updatedProduct = await productRepository.updateProduct(
@@ -71,7 +69,7 @@ export const useProducts = (): UseProducts => {
 		}
 	}
 
-	const handleDeleteProduct = async (id: string) => {
+	const deleteProduct = async (id: string) => {
 		try {
 			setIsLoading(true)
 			await productRepository.deleteProduct(id)
@@ -89,8 +87,8 @@ export const useProducts = (): UseProducts => {
 		products,
 		error,
 		isLoading,
-		handleAddProduct,
-		handleUpdateProduct,
-		handleDeleteProduct,
+		addProduct,
+		updateProduct,
+		deleteProduct,
 	}
 }

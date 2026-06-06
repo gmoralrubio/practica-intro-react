@@ -1,5 +1,6 @@
 import type { Product } from '@features/Products/types/product.types'
 import { toEuro } from '@features/Products/utils/utils'
+import { Link } from 'react-router'
 
 interface Props {
   product: Product
@@ -27,7 +28,9 @@ export const ProductCard: React.FC<Props> = ({ product }) => {
         <p className="text-2xl">{toEuro(product.price)}</p>
         <p>{product.description}</p>
         <div className="card-actions items-center justify-between">
-          <button className="btn btn-primary">Ver producto</button>
+          <Link to={`/products/${product.id}`}>
+            <button className="btn btn-primary">Ver producto</button>
+          </Link>
           <div className="space-x-2">
             {product.tags?.map((tag) => (
               <div
