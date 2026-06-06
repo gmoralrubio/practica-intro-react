@@ -5,7 +5,7 @@ import type {
 } from '@features/Products/types/product.types'
 import { useEffect, useState } from 'react'
 
-interface UseProducts {
+export interface UseProducts {
 	products: Product[]
 	error: Error | null
 	isLoading: boolean
