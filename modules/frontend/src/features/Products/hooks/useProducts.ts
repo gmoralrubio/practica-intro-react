@@ -22,6 +22,8 @@ export const useProducts = (): UseProducts => {
 	useEffect(() => {
 		const loadProducts = async () => {
 			try {
+				setIsLoading(true)
+
 				const products = await productRepository.getAllProducts()
 				setProducts(products)
 			} catch (error) {
@@ -31,6 +33,8 @@ export const useProducts = (): UseProducts => {
 				console.log(
 					error instanceof Error ? error.message : String(error)
 				)
+			} finally {
+				setIsLoading(false)
 			}
 		}
 		loadProducts()
