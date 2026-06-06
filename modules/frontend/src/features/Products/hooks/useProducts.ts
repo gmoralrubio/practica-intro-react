@@ -58,7 +58,11 @@ export const useProducts = (): UseProducts => {
 				product.id,
 				product
 			)
-			setProducts((prev) => [updatedProduct, ...prev])
+			setProducts((prev) =>
+				prev.map((p) =>
+					p.id === updatedProduct.id ? updatedProduct : p
+				)
+			)
 		} catch (error: unknown) {
 			setError(
 				error instanceof Error ? error : new Error('Error unknown')
