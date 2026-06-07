@@ -1,8 +1,9 @@
 import { useProductDetail } from '@features/Products/hooks/useProductDetail'
-import { useParams } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
 
 const ProductDetailPage: React.FC = () => {
   const params = useParams()
+  const navigate = useNavigate()
   const productId = params['productId']
 
   if (!productId) return <h1>Product id not valid</h1>
@@ -74,26 +75,19 @@ const ProductDetailPage: React.FC = () => {
       </div>
 
       <div className="mt-6">
-        <a
-          href="index.html"
+        <button
+          onClick={() => navigate('/products')}
           className="btn btn-ghost"
         >
           <svg
-            xmlns="http://www.w3.org/2000/svg"
             className="h-5 w-5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
+            role="presentation"
+            aria-hidden="true"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M10 19l-7-7m0 0l7-7m-7 7h18"
-            />
+            <use href="/icons.svg#back-arrow"></use>
           </svg>
           Volver al listado
-        </a>
+        </button>
       </div>
     </>
   )
