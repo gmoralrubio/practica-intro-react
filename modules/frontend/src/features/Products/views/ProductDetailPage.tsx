@@ -1,4 +1,5 @@
 import { useProductDetail } from '@features/Products/hooks/useProductDetail'
+import { toEuro } from '@features/Products/utils/utils'
 import { Badge } from '@shared/components/Badge'
 import { useNavigate, useParams } from 'react-router'
 
@@ -47,7 +48,9 @@ const ProductDetailPage: React.FC = () => {
                 </h1>
 
                 <div className="mb-6">
-                  <p className="text-primary text-3xl">{product?.price}</p>
+                  <p className="text-primary text-3xl">
+                    {toEuro(Number(product?.price))}
+                  </p>
                 </div>
 
                 <div className="mb-6">
