@@ -5,7 +5,7 @@
 		dark --prefersdark,
 		bumblebee;
 }
-
+@source '../../../node_modules/daisyui';
 @theme {
 	--font-primary: 'Geist', sans-serif;
 }
