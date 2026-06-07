@@ -1,9 +1,11 @@
 import { useProductDetail } from '@features/Products/hooks/useProductDetail'
+import { Badge } from '@shared/components/Badge'
 import { useNavigate, useParams } from 'react-router'
 
 const ProductDetailPage: React.FC = () => {
   const params = useParams()
   const navigate = useNavigate()
+
   const productId = params['productId']
 
   if (!productId) return <h1>Product id not valid</h1>
@@ -28,7 +30,16 @@ const ProductDetailPage: React.FC = () => {
             <div className="flex flex-col justify-between">
               <div>
                 <div className="mb-4">
-                  <span className="badge badge-soft badge-secondary badge-lg"></span>
+                  {product?.isOnSale && (
+                    <Badge
+                      className="font-bold"
+                      color={'secondary'}
+                      style={'soft'}
+                      size={'lg'}
+                    >
+                      Oferta
+                    </Badge>
+                  )}
                 </div>
 
                 <h1 className="card-title mb-4 text-3xl font-bold">
@@ -47,12 +58,13 @@ const ProductDetailPage: React.FC = () => {
                 </div>
                 <div className="mb-6 flex gap-2">
                   {product?.tags.map((tag) => (
-                    <div
+                    <Badge
                       key={tag}
-                      className="badge badge-outline badge-accent"
+                      style={'outline'}
+                      color={'accent'}
                     >
                       {tag}
-                    </div>
+                    </Badge>
                   ))}
                 </div>
                 <div className="divider"></div>

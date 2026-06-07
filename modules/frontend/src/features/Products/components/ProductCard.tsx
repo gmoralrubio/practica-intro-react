@@ -1,5 +1,6 @@
 import type { Product } from '@features/Products/types/product.types'
 import { toEuro } from '@features/Products/utils/utils'
+import { Badge } from '@shared/components/Badge'
 import { Link } from 'react-router'
 
 interface Props {
@@ -12,9 +13,12 @@ export const ProductCard: React.FC<Props> = ({ product }) => {
       <figure className="relative">
         <span>
           {product.isOnSale && (
-            <div className="badge badge-secondary absolute top-4 right-4 font-bold">
+            <Badge
+              color={'secondary'}
+              className={'absolute top-4 right-4 font-bold'}
+            >
               Oferta
-            </div>
+            </Badge>
           )}
         </span>
         <img
@@ -33,12 +37,13 @@ export const ProductCard: React.FC<Props> = ({ product }) => {
           </Link>
           <div className="space-x-2">
             {product.tags?.map((tag) => (
-              <div
+              <Badge
                 key={tag}
-                className="badge badge-soft badge-accent"
+                style={'soft'}
+                color={'accent'}
               >
                 {tag}
-              </div>
+              </Badge>
             ))}
           </div>
         </div>
