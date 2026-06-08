@@ -32,7 +32,7 @@
 		"noUncheckedSideEffectImports": true,
 		"allowUnreachableCode": false,
 		"noUncheckedIndexedAccess": true,
-		"noPropertyAccessFromIndexSignature": true,
+		"noPropertyAccessFromIndexSignature": false,
 		"noErrorTruncation": true,
 		"exactOptionalPropertyTypes": true
 	},
