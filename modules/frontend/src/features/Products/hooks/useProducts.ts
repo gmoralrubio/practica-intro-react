@@ -3,98 +3,60 @@ import type {
 	Product,
 	ProductCreateDTO,
 } from '@features/Products/types/product.types'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+import { useRevalidator } from 'react-router'
 
 export interface UseProducts {
-	products: Product[]
-	error: Error | null
-	isLoading: boolean
+	isMutating: boolean
 	addProduct: (product: ProductCreateDTO) => Promise<void>
 	updateProduct: (product: Product) => Promise<void>
 	deleteProduct: (id: string) => Promise<void>
 }
 
 export const useProducts = (): UseProducts => {
-	const [products, setProducts] = useState<Product[]>([])
-	const [error, setError] = useState<Error | null>(null)
-	const [isLoading, setIsLoading] = useState<boolean>(false)
-
-	useEffect(() => {
-		const loadProducts = async () => {
-			try {
-				setIsLoading(true)
-
-				const products = await productRepository.getAllProducts()
-				setProducts(products)
-			} catch (error) {
-				setError(
-					error instanceof Error ? error : new Error('Error unknown')
-				)
-				console.log(
-					error instanceof Error ? error.message : String(error)
-				)
-			} finally {
-				setIsLoading(false)
-			}
-		}
-		loadProducts()
-	}, [])
+	// Permite controlar los cambios de estado (disable button, etc.)
+	const [isMutating, setIsMutating] = useState(false)
+	// Recarga los datos despues de una mutación, reejecuta el loader de la ruta
+	const revalidator = useRevalidator()
 
 	const addProduct = async (product: ProductCreateDTO): Promise<void> => {
 		try {
-			setIsLoading(true)
-			const newProduct = await productRepository.addProduct(product)
-			setProducts((prev) => [newProduct, ...prev])
+			setIsMutating(true)
+			await productRepository.addProduct(product)
+			revalidator.revalidate()
 		} catch (error: unknown) {
-			setError(
-				error instanceof Error ? error : new Error('Error unknown')
-			)
 			console.log(error instanceof Error ? error.message : String(error))
 		} finally {
-			setIsLoading(false)
+			setIsMutating(false)
 		}
 	}
 
 	const updateProduct = async (product: Product): Promise<void> => {
 		try {
-			setIsLoading(true)
-			const updatedProduct = await productRepository.updateProduct(
-				product.id,
-				product
-			)
-			setProducts((prev) =>
-				prev.map((p) =>
-					p.id === updatedProduct.id ? updatedProduct : p
-				)
-			)
+			setIsMutating(true)
+			await productRepository.updateProduct(product.id, product)
+			revalidator.revalidate()
 		} catch (error: unknown) {
-			setError(
-				error instanceof Error ? error : new Error('Error unknown')
-			)
 			console.log(error instanceof Error ? error.message : String(error))
 		} finally {
-			setIsLoading(false)
+			setIsMutating(false)
 		}
 	}
 
 	const deleteProduct = async (id: string) => {
 		try {
-			setIsLoading(true)
+			setIsMutating(true)
 			await productRepository.deleteProduct(id)
-			const updatedProducts = products.filter((p) => p.id !== id)
-			setProducts(updatedProducts)
+			revalidator.revalidate()
 		} catch (error) {
-			setError(
-				error instanceof Error ? error : new Error('Error unknown')
-			)
 			console.log(error instanceof Error ? error.message : String(error))
+		} finally {
+			setIsMutating(false)
 		}
 	}
 
 	return {
-		products,
-		error,
-		isLoading,
+		isMutating,
 		addProduct,
 		updateProduct,
 		deleteProduct,

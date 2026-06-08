@@ -1,14 +1,16 @@
 import { ProductCard } from '@features/Products/components/ProductCard'
-import { useProducts } from '@features/Products/hooks/useProducts'
-import { ProductListLoadingPage } from '@features/Products/views/ProductListLoadingPage'
+import type { Product } from '@features/Products/types/product.types'
+import { useLoaderData } from 'react-router'
+
+interface LoaderProducts {
+  products: Product[]
+}
 
 const ProductListPage: React.FC = () => {
-  const { products, error, isLoading } = useProducts()
+  const { products } = useLoaderData<LoaderProducts>()
 
   return (
     <>
-      {isLoading && <ProductListLoadingPage />}
-      {error && <p>{error.message}</p>}
       <main className="grid grid-cols-1 gap-4 p-4 sm:grid-cols-2 lg:grid-cols-3">
         {products?.map((product) => (
           <ProductCard

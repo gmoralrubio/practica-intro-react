@@ -1,29 +1,25 @@
-import { useProductDetail } from '@features/Products/hooks/useProductDetail'
+import type { Product } from '@features/Products/types/product.types'
 import { toEuro } from '@features/Products/utils/utils'
 import { Badge } from '@shared/components/Badge'
-import { useNavigate, useParams } from 'react-router'
+import { useLoaderData, useNavigate } from 'react-router'
+
+interface LoaderProductDetails {
+  product: Product
+}
 
 const ProductDetailPage: React.FC = () => {
-  const params = useParams()
   const navigate = useNavigate()
-
-  const productId = params['productId']
-
-  if (!productId) return <h1>Product id not valid</h1>
-
-  const { product, error, isLoading } = useProductDetail(productId)
+  const { product } = useLoaderData<LoaderProductDetails>()
 
   return (
     <>
-      {isLoading && <p>Cargando</p>}
-      {error && <p>{error.message}</p>}
       <div className="card bg-base-100 shadow-xl">
         <div className="card-body">
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
             <div className="flex justify-center">
               <img
-                src={product?.image}
-                alt={product?.name}
+                src={product.image}
+                alt={product.name}
                 className="aspect-square rounded-lg object-cover"
               />
             </div>
@@ -44,19 +40,19 @@ const ProductDetailPage: React.FC = () => {
                 </div>
 
                 <h1 className="card-title mb-4 text-3xl font-bold">
-                  {product?.name}
+                  {product.name}
                 </h1>
 
                 <div className="mb-6">
                   <p className="text-primary text-3xl">
-                    {toEuro(Number(product?.price))}
+                    {toEuro(Number(product.price))}
                   </p>
                 </div>
 
                 <div className="mb-6">
                   <h2 className="text-md mb-2 font-medium">Descripción</h2>
                   <p className="text-base-content/80 leading-relaxed">
-                    {product?.description}
+                    {product.description}
                   </p>
                 </div>
                 <div className="mb-6 flex gap-2">
@@ -78,7 +74,9 @@ const ProductDetailPage: React.FC = () => {
                   </div>
                   <div>
                     <p className="text-base-content/60">Publicado</p>
-                    <p className="font-semibold"></p>
+                    <p className="font-semibold">
+                      {product.updatedAt.toLocaleString()}
+                    </p>
                   </div>
                 </div>
               </div>

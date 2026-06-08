@@ -1,14 +1,10 @@
 import { createBrowserRouter, redirect } from 'react-router'
 import AppLayout from '@features/App/AppLayout'
-import { lazy, Suspense } from 'react'
-import { ProductListLoadingPage } from '@features/Products/views/ProductListLoadingPage'
-
-const ProductListPage = lazy(
-  () => import('@features/Products/views/ProductListPage')
-)
-const ProductDetailPage = lazy(
-  () => import('@features/Products/views/ProductDetailPage')
-)
+import { ProductListLoadingPage } from '@features/Products/views/ProductListPage/ProductListLoadingPage'
+import { loadProductDetail, loadProducts } from '@features/App/router/loaders'
+import ProductDetailPage from '@features/Products/views/ProductDetailPage/ProductDetailPage'
+import ProductListPage from '@features/Products/views/ProductListPage/ProductListPage'
+import { ProductDetailLoadingPage } from '@features/Products/views/ProductDetailPage/ProductDetailLoadingPage'
 
 export const router = createBrowserRouter([
   {
@@ -20,19 +16,17 @@ export const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: (
-              <Suspense fallback={<ProductListLoadingPage />}>
-                <ProductListPage />
-              </Suspense>
-            ),
+            loader: loadProducts,
+            HydrateFallback: ProductListLoadingPage,
+            errorElement: <p>Error al cargar los productos</p>,
+            Component: ProductListPage,
           },
           {
             path: ':productId',
-            element: (
-              <Suspense fallback={<p>Loading...</p>}>
-                <ProductDetailPage />
-              </Suspense>
-            ),
+            loader: loadProductDetail,
+            HydrateFallback: ProductDetailLoadingPage,
+            errorElement: <p>Error al cargar el producto</p>,
+            Component: ProductDetailPage,
           },
         ],
       },
