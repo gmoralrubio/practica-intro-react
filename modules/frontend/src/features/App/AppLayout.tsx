@@ -4,9 +4,11 @@ import { Outlet } from 'react-router'
 
 const AppLayout: React.FC = () => {
   return (
-    <div className="font-primary container mx-auto max-w-7xl">
+    <div className="font-primary container mx-auto flex min-h-screen max-w-7xl flex-col">
       <Header />
-      <Outlet />
+      <main className="flex-1">
+        <Outlet />
+      </main>
       <Footer />
     </div>
   )
