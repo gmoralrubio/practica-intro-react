@@ -14,7 +14,7 @@ export const ProductCard: React.FC<Props> = ({ product }) => {
         <span>
           {product.isOnSale && (
             <Badge
-              color={'secondary'}
+              color={'primary'}
               className={'absolute top-4 right-4 font-bold'}
             >
               Oferta
