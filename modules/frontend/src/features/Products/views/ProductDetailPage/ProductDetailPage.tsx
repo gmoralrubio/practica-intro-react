@@ -89,6 +89,7 @@ const ProductDetailPage: React.FC = () => {
 
       <div className="mt-6">
         <button
+          type="button"
           onClick={() => navigate('/products')}
           className="btn btn-ghost"
         >

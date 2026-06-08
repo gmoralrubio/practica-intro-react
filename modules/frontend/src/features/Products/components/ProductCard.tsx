@@ -33,7 +33,7 @@ export const ProductCard: React.FC<Props> = ({ product }) => {
         <p>{product.description}</p>
         <div className="card-actions items-center justify-between">
           <Link to={`/products/${product.id}`}>
-            <button className="btn btn-primary">Ver producto</button>
+            <button type="button" className="btn btn-primary">Ver producto</button>
           </Link>
           <div className="space-x-2">
             {product.tags?.map((tag) => (
