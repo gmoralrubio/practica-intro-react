@@ -26,9 +26,8 @@ export const useProducts = (): UseProducts => {
 			revalidator.revalidate()
 		} catch (error: unknown) {
 			console.log(error instanceof Error ? error.message : String(error))
-		} finally {
-			setIsMutating(false)
 		}
+		setIsMutating(false)
 	}
 
 	const updateProduct = async (product: Product): Promise<void> => {
@@ -38,9 +37,8 @@ export const useProducts = (): UseProducts => {
 			revalidator.revalidate()
 		} catch (error: unknown) {
 			console.log(error instanceof Error ? error.message : String(error))
-		} finally {
-			setIsMutating(false)
 		}
+		setIsMutating(false)
 	}
 
 	const deleteProduct = async (id: string) => {
@@ -50,9 +48,8 @@ export const useProducts = (): UseProducts => {
 			revalidator.revalidate()
 		} catch (error) {
 			console.log(error instanceof Error ? error.message : String(error))
-		} finally {
-			setIsMutating(false)
 		}
+		setIsMutating(false)
 	}
 
 	return {

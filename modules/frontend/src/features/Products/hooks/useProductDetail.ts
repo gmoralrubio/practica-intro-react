@@ -25,9 +25,8 @@ export const useProductDetail = (id: string): UseProductDetail => {
 				console.log(
 					error instanceof Error ? error.message : String(error)
 				)
-			} finally {
-				setIsLoading(false)
 			}
+			setIsLoading(false)
 		}
 		loadProduct()
 	}, [id])
