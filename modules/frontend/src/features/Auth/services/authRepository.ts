@@ -28,6 +28,28 @@ export const authRepository = {
 		return token
 	},
 
+	createUser: async (email: string, password: string) => {
+		const API_URL = `${API_BASE_URL}/register`
+
+		const response = await fetch(API_URL, {
+			method: 'POST',
+			headers: {
+				'Content-type': 'application/json',
+			},
+			body: JSON.stringify({
+				username: email,
+				password,
+			}),
+		})
+
+		if (!response.ok) {
+			throw new Error('Signup failed.')
+		}
+
+		const data = await response.json()
+		return data
+	},
+
 	getUserInfo: async (token: string): Promise<User> => {
 		const API_URL = `${API_BASE_URL}/me`
 

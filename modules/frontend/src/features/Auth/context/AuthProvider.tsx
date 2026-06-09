@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   }, [])
 
   const login = async (email: string, password: string) => {
-    setState((prev) => ({ ...prev, isLoading: true }))
+    setState((prev) => ({ ...prev, error: null, isLoading: true }))
     try {
       const token = await authRepository.loginUser(email, password)
       localStorage.setItem('accessToken', token.accessToken)
@@ -53,6 +53,24 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       isLoading: false,
       user: null,
     }))
+  }
+
+  const signup = async (email: string, password: string) => {
+    setState((prev) => ({ ...prev, isLoading: true }))
+    try {
+      await authRepository.createUser(email, password)
+      setState((prev) => ({
+        ...prev,
+        isLoading: false,
+      }))
+    } catch (error: unknown) {
+      setState((prev) => ({
+        ...prev,
+        isLoading: false,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      }))
+      throw error
+    }
   }
 
   const checkAuth = async () => {
@@ -90,6 +108,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         error: state.error,
         login,
         logout,
+        signup,
         checkAuth,
       }}
     >

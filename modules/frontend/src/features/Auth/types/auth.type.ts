@@ -13,6 +13,8 @@ export interface AuthContextType {
 	error: string | null
 	login: (email: string, password: string) => Promise<void>
 	logout: () => void
+	signup: (email: string, password: string) => Promise<void>
+
 	checkAuth: () => Promise<void>
 }
 
