@@ -1,4 +1,4 @@
-import { useAuth } from '@features/Auth/hooks/useAuth'
+import { useAuth } from '@features/Auth/context/AuthContext'
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
 
@@ -17,7 +17,6 @@ export const LoginPage: React.FC = () => {
     password: '',
   })
 
-  // Define the updateFormField function
   const updateFormField = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target
     setFormData((prev) => ({
@@ -32,11 +31,13 @@ export const LoginPage: React.FC = () => {
     const email = formData.get('email') as string
     const password = formData.get('password') as string
     login(email, password)
+    if (!error) navigate('/')
   }
 
   return (
     <div className="my-20 flex justify-center">
-      {error && <p>{error.message}</p>}
+      {error && <p>{error}</p>}
+      {isLoading && <p>Loading...</p>}
       <form
         className="fieldset bg-base-200 border-base-300 rounded-box h-fit w-xs border p-4"
         onSubmit={handleSubmit}
