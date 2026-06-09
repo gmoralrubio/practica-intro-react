@@ -36,6 +36,7 @@ export const Header: React.FC = () => {
             <span className="text-sm">Bienvenido {user?.username}</span>
             <div className="space-x-4">
               <button
+                type="button"
                 onClick={handleLogout}
                 className="btn btn-secondary"
               >
