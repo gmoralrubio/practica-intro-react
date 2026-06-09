@@ -23,15 +23,15 @@ export const authRepository = {
 			throw new Error('Login failed. Please check your credentials.')
 		}
 
-		const accessToken: AccessToken = await response.json()
-		return accessToken
+		const token: AccessToken = await response.json()
+		return token
 	},
 
 	getUserInfo: async (token: string): Promise<User> => {
 		const API_URL = `${API_BASE_URL}/me`
 
 		if (!token) {
-			throw new Error('Token inválido o no encontrado')
+			throw new Error('Invalid token or not found')
 		}
 
 		const response = await fetch(API_URL, {
