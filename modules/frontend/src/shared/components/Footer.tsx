@@ -12,7 +12,7 @@ export const Footer: React.FC = () => {
         <p>Copyright © 2026 - All right reserved</p>
       </aside>
       <nav className="grid-flow-col gap-4 md:place-self-center md:justify-self-end">
-        <a>
+        <a href="#">
           <svg
             className="h-6 w-6"
             role="presentation"
@@ -21,7 +21,7 @@ export const Footer: React.FC = () => {
             <use href="/icons.svg#twitter-logo"></use>
           </svg>
         </a>
-        <a>
+        <a href="#">
           <svg
             className="h-6 w-6"
             role="presentation"
@@ -30,7 +30,7 @@ export const Footer: React.FC = () => {
             <use href="/icons.svg#youtube-logo"></use>
           </svg>
         </a>
-        <a>
+        <a href="#">
           <svg
             className="h-6 w-6"
             role="presentation"
