@@ -12,16 +12,17 @@ const token = '123'
 
 export const productRepository = {
 	getAllProducts: async (): Promise<Product[]> => {
-		const response = await fetch(API_URL)
+		const response = await fetch(`${API_URL}?_expand=user`)
 		if (!response.ok) {
 			throw new Error(`HTTP ${response.status}: ${response.statusText}`)
 		}
+
 		const data = await response.json()
 		return data.map(mapProduct)
 	},
 
 	getProductById: async (id: string): Promise<Product> => {
-		const response = await fetch(`${API_URL}/${id}`)
+		const response = await fetch(`${API_URL}/${id}?_expand=user`)
 		if (!response.ok) {
 			throw new Error(`HTTP ${response.status}: ${response.statusText}`)
 		}

@@ -21,6 +21,7 @@ export function mapProduct(dto: ProductResponseDTO): Product {
 		image: dto.image,
 		isOnSale: dto.isOnSale,
 		userId: dto.userId,
+		username: dto.user.username,
 		tags: mapTags(dto.tags),
 		updatedAt: new Date(dto.updatedAt),
 	}

@@ -70,7 +70,7 @@ const ProductDetailPage: React.FC = () => {
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   <div>
                     <p className="text-base-content/60">Propietario</p>
-                    <p className="font-semibold"></p>
+                    <p className="font-semibold">{product.username}</p>
                   </div>
                   <div>
                     <p className="text-base-content/60">Publicado</p>

@@ -9,6 +9,7 @@ export interface Product {
 	image?: string
 	isOnSale: boolean
 	userId: number
+	username: string
 	tags: Tag[]
 	updatedAt: Date
 }
@@ -32,6 +33,7 @@ export interface ProductResponseDTO {
 	image?: string
 	isOnSale: boolean
 	userId: number
+	user: { id: number; password: string; username: string }
 	tags: string[]
 	updatedAt: string
 }
