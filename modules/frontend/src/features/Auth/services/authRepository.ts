@@ -1,4 +1,5 @@
-import type { AccessToken, User } from '@features/Auth/types/user.type'
+import type { AccessToken } from '@features/Auth/types/auth.type'
+import type { User } from '@features/Auth/types/user.type'
 
 const API_BASE_URL = import.meta.env.VITE_AUTH_BASE_URL
 export const authRepository = {

@@ -1,4 +1,4 @@
-import { useAuth } from '@features/Auth/context/AuthContext'
+import { useAuth } from '@features/Auth/hooks/useAuth'
 import { Link, NavLink, useNavigate } from 'react-router'
 
 export const Header: React.FC = () => {
