@@ -8,7 +8,8 @@ import { ProductDetailLoadingPage } from '@features/Products/views/ProductDetail
 import { LoginPage } from '@features/Auth/views/LoginPage'
 import { RegisterPage } from '@features/Auth/views/RegisterPage'
 import { ProtectedRoute } from '@features/App/router/components/ProtectedRoute'
-import App from '@features/App/App'
+import App from '@features/App/views/App'
+import { AppLoadingPage } from '@features/App/views/AppLoadingPage'
 
 export const router = createBrowserRouter([
   {
@@ -18,7 +19,7 @@ export const router = createBrowserRouter([
       {
         index: true,
         loader: loadProducts,
-        HydrateFallback: ProductListLoadingPage,
+        HydrateFallback: AppLoadingPage,
         errorElement: <p>Error al cargar los productos</p>,
         element: <App />,
       },
