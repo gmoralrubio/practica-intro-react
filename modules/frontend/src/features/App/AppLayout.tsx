@@ -6,9 +6,9 @@ const AppLayout: React.FC = () => {
   return (
     <div className="font-primary container mx-auto flex min-h-screen max-w-7xl flex-col">
       <Header />
-      <main className="flex-1">
+      <div className="flex-1">
         <Outlet />
-      </main>
+      </div>
       <Footer />
     </div>
   )
