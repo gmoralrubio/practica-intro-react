@@ -1,5 +1,5 @@
 import type { Product } from '@features/Products/types/product.types'
-import { toEuro } from '@features/Products/utils/utils'
+import { formatDate, toEuro } from '@features/Products/utils/utils'
 import { Badge } from '@shared/components/Badge'
 import { useLoaderData, useNavigate } from 'react-router'
 
@@ -30,9 +30,8 @@ const ProductDetailPage: React.FC = () => {
                   {product?.isOnSale && (
                     <Badge
                       className="font-bold"
-                      color={'secondary'}
-                      style={'soft'}
-                      size={'lg'}
+                      color="secondary"
+                      size="lg"
                     >
                       Oferta
                     </Badge>
@@ -59,8 +58,8 @@ const ProductDetailPage: React.FC = () => {
                   {product?.tags.map((tag) => (
                     <Badge
                       key={tag}
-                      style={'outline'}
-                      color={'accent'}
+                      style="soft"
+                      color="accent"
                     >
                       {tag}
                     </Badge>
@@ -75,7 +74,7 @@ const ProductDetailPage: React.FC = () => {
                   <div>
                     <p className="text-base-content/60">Publicado</p>
                     <p className="font-semibold">
-                      {product.updatedAt.toLocaleString()}
+                      {formatDate(product.updatedAt)}
                     </p>
                   </div>
                 </div>
@@ -90,7 +89,7 @@ const ProductDetailPage: React.FC = () => {
       <div className="mt-6">
         <button
           type="button"
-          onClick={() => navigate('/products')}
+          onClick={() => navigate('/')}
           className="btn btn-ghost"
         >
           <svg
