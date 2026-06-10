@@ -25,13 +25,17 @@ export const LoginPage: React.FC = () => {
     }))
   }
 
-  const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
     const email = formData.get('email') as string
     const password = formData.get('password') as string
-    login(email, password)
-    if (!error) navigate('/')
+
+    await login(email, password)
+
+    if (!error) {
+      navigate('/')
+    }
   }
 
   return (
