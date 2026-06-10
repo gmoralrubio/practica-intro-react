@@ -14,8 +14,8 @@ export const ProductCard: React.FC<Props> = ({ product }) => {
         <span>
           {product.isOnSale && (
             <Badge
-              color={'primary'}
-              className={'absolute top-4 right-4 font-bold'}
+              color="secondary"
+              className="absolute top-4 right-4 font-bold"
             >
               Oferta
             </Badge>
@@ -32,15 +32,20 @@ export const ProductCard: React.FC<Props> = ({ product }) => {
         <p className="text-2xl">{toEuro(product.price)}</p>
         <p>{product.description}</p>
         <div className="card-actions items-center justify-between">
-          <Link to={`/products/${product.id}`}>
-            <button type="button" className="btn btn-primary">Ver producto</button>
+          <Link to={`${product.id}`}>
+            <button
+              type="button"
+              className="btn btn-primary"
+            >
+              Ver producto
+            </button>
           </Link>
           <div className="space-x-2">
             {product.tags?.map((tag) => (
               <Badge
                 key={tag}
-                style={'soft'}
-                color={'accent'}
+                style="soft"
+                color="accent"
               >
                 {tag}
               </Badge>
