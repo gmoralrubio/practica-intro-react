@@ -1,4 +1,4 @@
-import { createBrowserRouter, redirect } from 'react-router'
+import { createBrowserRouter } from 'react-router'
 import AppLayout from '@features/App/AppLayout'
 import { ProductListLoadingPage } from '@features/Products/views/ProductListPage/ProductListLoadingPage'
 import { loadProductDetail, loadProducts } from '@features/App/router/loaders'
@@ -7,12 +7,28 @@ import ProductListPage from '@features/Products/views/ProductListPage/ProductLis
 import { ProductDetailLoadingPage } from '@features/Products/views/ProductDetailPage/ProductDetailLoadingPage'
 import { LoginPage } from '@features/Auth/views/LoginPage'
 import { RegisterPage } from '@features/Auth/views/RegisterPage'
+import { ProtectedRoute } from '@features/App/router/components/ProtectedRoute'
+import App from '@features/App/App'
 
 export const router = createBrowserRouter([
   {
+    path: '/',
     element: <AppLayout />,
     children: [
-      { index: true, loader: () => redirect('/products') },
+      {
+        index: true,
+        loader: loadProducts,
+        HydrateFallback: ProductListLoadingPage,
+        errorElement: <p>Error al cargar los productos</p>,
+        element: <App />,
+      },
+      {
+        path: '/:productId',
+        loader: loadProductDetail,
+        HydrateFallback: ProductDetailLoadingPage,
+        errorElement: <p>Error al cargar el producto</p>,
+        element: <ProductDetailPage />,
+      },
       {
         path: 'products',
         children: [
@@ -21,14 +37,11 @@ export const router = createBrowserRouter([
             loader: loadProducts,
             HydrateFallback: ProductListLoadingPage,
             errorElement: <p>Error al cargar los productos</p>,
-            Component: ProductListPage,
-          },
-          {
-            path: ':productId',
-            loader: loadProductDetail,
-            HydrateFallback: ProductDetailLoadingPage,
-            errorElement: <p>Error al cargar el producto</p>,
-            Component: ProductDetailPage,
+            element: (
+              <ProtectedRoute>
+                <ProductListPage />
+              </ProtectedRoute>
+            ),
           },
         ],
       },
