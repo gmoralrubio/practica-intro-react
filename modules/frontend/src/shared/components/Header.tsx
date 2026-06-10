@@ -11,9 +11,9 @@ export const Header: React.FC = () => {
   }
 
   return (
-    <div className="bg-primary w-full shadow-sm max-lg:collapse">
+    <div className="bg-neutral w-full shadow-sm max-lg:collapse">
       <div className="navbar justify-between px-4">
-        <h2 className="text-xl font-extrabold">
+        <h2 className="text-xl font-extrabold text-white">
           <NavLink to={'/'}>Another eShop Project</NavLink>
         </h2>
         {!isAuthenticated ? (
@@ -26,14 +26,16 @@ export const Header: React.FC = () => {
             </Link>
             <Link
               to={'auth/register'}
-              className="btn btn-neutral"
+              className="btn btn-primary"
             >
               Register
             </Link>
           </div>
         ) : (
           <div className="flex items-center gap-4">
-            <span className="text-sm">Bienvenido {user?.username}</span>
+            <span className="text-sm text-white">
+              Bienvenido {user?.username}
+            </span>
             <div className="space-x-4">
               <button
                 type="button"
@@ -42,6 +44,12 @@ export const Header: React.FC = () => {
               >
                 Logout
               </button>
+              <NavLink
+                to="/products"
+                className="btn btn-primary"
+              >
+                Mis productos
+              </NavLink>
             </div>
           </div>
         )}
