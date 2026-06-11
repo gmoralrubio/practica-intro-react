@@ -73,6 +73,8 @@ const ProductListPage: React.FC = () => {
             <th>Name</th>
             <th>Price</th>
             <th>Tags</th>
+            <th>On sale</th>
+            <th>Image</th>
             <th>Updated at</th>
             <th className="w-0"></th>
           </tr>
@@ -95,6 +97,27 @@ const ProductListPage: React.FC = () => {
                     </Badge>
                   ))}
                 </div>
+              </td>
+              <td>
+                {product.isOnSale ? (
+                  <Badge style="soft" color="success" size="sm">
+                    On sale
+                  </Badge>
+                ) : (
+                  <Badge style="soft" color="ghost" size="sm">
+                    No
+                  </Badge>
+                )}
+              </td>
+              <td>
+                <img
+                  src={
+                    product.image ||
+                    'https://placehold.co/600x600?text=Image+not+provided'
+                  }
+                  alt={product.name}
+                  className="h-10 w-10 rounded object-cover"
+                />
               </td>
               <td className="text-nowrap">{formatDate(product.updatedAt)}</td>
               <td>

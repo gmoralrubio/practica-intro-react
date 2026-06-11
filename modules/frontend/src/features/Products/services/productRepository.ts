@@ -33,7 +33,7 @@ export const productRepository = {
 		product: ProductCreateDTO,
 		token: string
 	): Promise<Product> => {
-		const response = await fetch(API_URL, {
+		const response = await fetch(`${API_URL}?_expand=user`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'Application/json',
@@ -53,7 +53,7 @@ export const productRepository = {
 		product: ProductUpdateDTO,
 		token: string
 	): Promise<Product> => {
-		const response = await fetch(`${API_URL}/${id}`, {
+		const response = await fetch(`${API_URL}/${id}?_expand=user`, {
 			method: 'PUT',
 			headers: {
 				'Content-Type': 'application/json',

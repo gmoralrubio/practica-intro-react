@@ -1,7 +1,12 @@
 import type { ReactElement } from 'react'
 import { twMerge } from 'tailwind-merge'
 
-type BadgeColorVariant = 'primary' | 'secondary' | 'accent'
+type BadgeColorVariant =
+  | 'primary'
+  | 'secondary'
+  | 'accent'
+  | 'success'
+  | 'ghost'
 type BadgeStyleVariant = 'outline' | 'soft'
 type BadgeSizeVariant = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 

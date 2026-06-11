@@ -1,4 +1,4 @@
-import type { Product } from '@features/Products/types/product.types'
+import type { Product, Tag } from '@features/Products/types/product.types'
 import { useState } from 'react'
 
 interface Props {
@@ -8,18 +8,10 @@ interface Props {
   closeDialog: () => void
 }
 
-interface ProductUpdateDTO {
-  name?: string
-  price?: string
-  isOnSale?: boolean
-  description?: string
-  image?: string
-  tags?: string[]
-}
-
 export const ProductEditForm: React.FC<Props> = ({
   product,
   isMutating,
+  editProduct,
   closeDialog,
 }) => {
   const [updatedProduct, setUpdatedProduct] = useState(product)
@@ -27,24 +19,31 @@ export const ProductEditForm: React.FC<Props> = ({
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const { name, value } = e.target
-    setUpdatedProduct((prev) => ({
-      ...prev,
-      [name]: value,
-    }))
+    const { name, value, type } = e.target
+    const checked = (e.target as HTMLInputElement).checked
+
+    setUpdatedProduct((prev) => {
+      if (type === 'checkbox') return { ...prev, [name]: checked }
+      if (name === 'price') return { ...prev, price: Number(value) }
+      return { ...prev, [name]: value }
+    })
+  }
+
+  const handleTagToggle = (tag: Tag) => {
+    setUpdatedProduct((prev) => {
+      const tags = prev.tags.includes(tag)
+        ? prev.tags.filter((t) => t !== tag)
+        : [...prev.tags, tag]
+      return { ...prev, tags: tags as Product['tags'] }
+    })
   }
 
   const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
-    e.preventDefault
-    const formData = new FormData(e.currentTarget)
-    const name = formData.get('name') as string
-    const price = formData.get('password') as string
-    const isOnSale = formData.get('isOnSale') as string
-    const description = formData.get('description') as string
-    const image = formData.get('image') as string
-    const tags = formData.get('tags') as string
-
-    const updatedProduct = {}
+    e.preventDefault()
+    editProduct({
+      ...updatedProduct,
+      image: updatedProduct.image || null,
+    })
   }
 
   return (
@@ -54,7 +53,7 @@ export const ProductEditForm: React.FC<Props> = ({
     >
       <fieldset className="fieldset">
         <label
-          htmlFor="name"
+          htmlFor="product-name"
           className="label"
         >
           Product name
@@ -74,7 +73,7 @@ export const ProductEditForm: React.FC<Props> = ({
       <div className="flex gap-4">
         <fieldset className="fieldset flex-1">
           <label
-            htmlFor="price"
+            htmlFor="product-price"
             className="label"
           >
             Price
@@ -88,29 +87,32 @@ export const ProductEditForm: React.FC<Props> = ({
             placeholder="Price"
             min="1"
             onChange={handleChange}
-            value={product.price}
+            value={updatedProduct.price}
             required
           />
         </fieldset>
 
         <fieldset className="fieldset flex-1">
           <label
-            htmlFor="isOnSale"
-            className="label"
+            htmlFor="product-isOnSale"
+            className="label cursor-pointer"
           >
             Is on sale
-            <input
-              type="checkbox"
-              defaultChecked
-              className="toggle"
-            />
           </label>
+          <input
+            type="checkbox"
+            name="isOnSale"
+            id="product-isOnSale"
+            className="toggle"
+            checked={updatedProduct.isOnSale}
+            onChange={handleChange}
+          />
         </fieldset>
       </div>
 
       <fieldset className="fieldset">
         <label
-          htmlFor="description"
+          htmlFor="product-description"
           className="label"
         >
           Description
@@ -122,14 +124,13 @@ export const ProductEditForm: React.FC<Props> = ({
           name="description"
           required
           onChange={handleChange}
-        >
-          {product.description}
-        </textarea>
+          value={updatedProduct.description}
+        />
       </fieldset>
 
       <fieldset className="fieldset">
         <label
-          htmlFor="image"
+          htmlFor="product-image"
           className="label"
         >
           Image (optional)
@@ -142,8 +143,30 @@ export const ProductEditForm: React.FC<Props> = ({
           placeholder="https://"
           className="input w-full"
           onChange={handleChange}
-          value={product.image}
+          value={updatedProduct.image ?? ''}
         />
+      </fieldset>
+
+      <fieldset className="fieldset">
+        <label className="label">Tags</label>
+        <div className="flex flex-wrap gap-1">
+          {(['sport', 'home', 'tech'] as const).map((tag) => (
+            <input
+              key={tag}
+              className="btn"
+              type="checkbox"
+              aria-label={tag}
+              checked={updatedProduct.tags.includes(tag)}
+              onChange={() => handleTagToggle(tag)}
+            />
+          ))}
+          <input
+            className="btn btn-square"
+            type="button"
+            value="×"
+            onClick={() => setUpdatedProduct((prev) => ({ ...prev, tags: [] }))}
+          />
+        </div>
       </fieldset>
 
       <div className="mt-4 space-x-4">

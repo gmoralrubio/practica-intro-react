@@ -18,7 +18,7 @@ const ProductDetailPage: React.FC = () => {
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
             <div className="flex justify-center">
               <img
-                src={product.image}
+                src={product.image || 'https://placehold.co/600x600?text=Image+not+provided'}
                 alt={product.name}
                 className="aspect-square rounded-lg object-cover"
               />

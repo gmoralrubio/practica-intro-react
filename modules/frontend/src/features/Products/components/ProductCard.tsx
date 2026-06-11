@@ -23,7 +23,7 @@ export const ProductCard: React.FC<Props> = ({ product }) => {
         </span>
         <img
           className="aspect-square object-cover"
-          src={product.image}
+          src={product.image || 'https://placehold.co/600x600?text=Image+not+provided'}
           alt={product.name}
         />
       </figure>

@@ -1,4 +1,4 @@
-export type Tag = 'sport' | 'home' | 'tech' | 'Unknown'
+export type Tag = 'sport' | 'home' | 'tech'
 
 // Domain
 export interface Product {
@@ -6,7 +6,7 @@ export interface Product {
 	name: string
 	description: string
 	price: number
-	image?: string
+	image?: string | null
 	isOnSale: boolean
 	userId: number
 	username: string
@@ -19,7 +19,7 @@ export interface ProductCreateDTO {
 	name: string
 	description: string
 	price: number
-	image?: string
+	image?: string | null
 	isOnSale: boolean
 	tags: string[]
 }
@@ -30,7 +30,7 @@ export interface ProductResponseDTO {
 	name: string
 	description: string
 	price: number
-	image?: string
+	image?: string | null
 	isOnSale: boolean
 	userId: number
 	user: { id: number; password: string; username: string }
