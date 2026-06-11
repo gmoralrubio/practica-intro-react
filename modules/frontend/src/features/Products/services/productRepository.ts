@@ -3,12 +3,11 @@ import type {
 	Product,
 	ProductCreateDTO,
 	ProductResponseDTO,
+	ProductUpdateDTO,
 } from '@features/Products/types/product.types'
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
 const API_URL = `${API_BASE_URL}/products`
-// TODO:
-const token = '123'
 
 export const productRepository = {
 	getAllProducts: async (): Promise<Product[]> => {
@@ -30,7 +29,10 @@ export const productRepository = {
 		return mapProduct(data)
 	},
 
-	addProduct: async (product: ProductCreateDTO): Promise<Product> => {
+	addProduct: async (
+		product: ProductCreateDTO,
+		token: string
+	): Promise<Product> => {
 		const response = await fetch(API_URL, {
 			method: 'POST',
 			headers: {
@@ -46,7 +48,11 @@ export const productRepository = {
 		return mapProduct(data)
 	},
 
-	updateProduct: async (id: string, product: Product): Promise<Product> => {
+	updateProduct: async (
+		id: string,
+		product: ProductUpdateDTO,
+		token: string
+	): Promise<Product> => {
 		const response = await fetch(`${API_URL}/${id}`, {
 			method: 'PUT',
 			headers: {
@@ -62,7 +68,7 @@ export const productRepository = {
 		return mapProduct(data)
 	},
 
-	deleteProduct: async (id: string): Promise<void> => {
+	deleteProduct: async (id: string, token: string): Promise<void> => {
 		const response = await fetch(`${API_URL}/${id}`, {
 			method: 'DELETE',
 			headers: {

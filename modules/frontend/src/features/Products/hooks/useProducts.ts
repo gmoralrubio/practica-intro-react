@@ -19,10 +19,13 @@ export const useProducts = (): UseProducts => {
 	// Recarga los datos despues de una mutación, reejecuta el loader de la ruta
 	const revalidator = useRevalidator()
 
+	const token = localStorage.getItem('accessToken')
+	if (!token) throw new Error('No token')
+
 	const addProduct = async (product: ProductCreateDTO): Promise<void> => {
 		try {
 			setIsMutating(true)
-			await productRepository.addProduct(product)
+			await productRepository.addProduct(product, token)
 			revalidator.revalidate()
 		} catch (error: unknown) {
 			console.log(error instanceof Error ? error.message : String(error))
@@ -33,7 +36,7 @@ export const useProducts = (): UseProducts => {
 	const updateProduct = async (product: Product): Promise<void> => {
 		try {
 			setIsMutating(true)
-			await productRepository.updateProduct(product.id, product)
+			await productRepository.updateProduct(product.id, product, token)
 			revalidator.revalidate()
 		} catch (error: unknown) {
 			console.log(error instanceof Error ? error.message : String(error))
@@ -44,7 +47,7 @@ export const useProducts = (): UseProducts => {
 	const deleteProduct = async (id: string) => {
 		try {
 			setIsMutating(true)
-			await productRepository.deleteProduct(id)
+			await productRepository.deleteProduct(id, token)
 			revalidator.revalidate()
 		} catch (error) {
 			console.log(error instanceof Error ? error.message : String(error))

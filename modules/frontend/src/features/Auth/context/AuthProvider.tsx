@@ -29,6 +29,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       setState((prev) => ({
         ...prev,
         isLoading: false,
+        error: null,
         user,
       }))
     } catch (error: unknown) {

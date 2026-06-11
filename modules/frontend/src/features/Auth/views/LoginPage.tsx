@@ -31,11 +31,10 @@ export const LoginPage: React.FC = () => {
     const email = formData.get('email') as string
     const password = formData.get('password') as string
 
-    await login(email, password)
-
-    if (!error) {
+    try {
+      await login(email, password)
       navigate('/')
-    }
+    } catch {}
   }
 
   return (

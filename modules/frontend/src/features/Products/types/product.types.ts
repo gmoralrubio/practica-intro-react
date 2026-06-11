@@ -37,3 +37,5 @@ export interface ProductResponseDTO {
 	tags: string[]
 	updatedAt: string
 }
+
+export type ProductUpdateDTO = Partial<ProductCreateDTO>

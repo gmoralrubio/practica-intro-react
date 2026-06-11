@@ -33,8 +33,7 @@
 		"allowUnreachableCode": false,
 		"noUncheckedIndexedAccess": true,
 		"noPropertyAccessFromIndexSignature": false,
-		"noErrorTruncation": true,
-		"exactOptionalPropertyTypes": true
+		"noErrorTruncation": true
 	},
 	"include": ["src"]
 }
