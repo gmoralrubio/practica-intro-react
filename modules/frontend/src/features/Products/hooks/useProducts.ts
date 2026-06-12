@@ -19,8 +19,23 @@ export const useProducts = (): UseProducts => {
 	// Recarga los datos despues de una mutación, reejecuta el loader de la ruta
 	const revalidator = useRevalidator()
 
+	// Solo se puede usar useProducts si existe token
 	const token = localStorage.getItem('accessToken')
-	if (!token) throw new Error('No token')
+	if (!token) {
+		console.log('useProducts: no token')
+		return {
+			isMutating: false,
+			addProduct: async () => {
+				console.log('addProduct: no token')
+			},
+			updateProduct: async () => {
+				console.log('updateProduct: no token')
+			},
+			deleteProduct: async () => {
+				console.log('deleteProduct: no token')
+			},
+		}
+	}
 
 	const addProduct = async (product: ProductCreateDTO): Promise<void> => {
 		try {
