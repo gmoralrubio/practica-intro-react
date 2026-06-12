@@ -1,8 +1,9 @@
 import { useAuth } from '@features/Auth/hooks/useAuth'
+import { ProductCreateForm } from '@features/Products/components/ProductCreateForm'
 import { ProductDeleteForm } from '@features/Products/components/ProductDeleteForm'
 import { ProductEditForm } from '@features/Products/components/ProductEditForm'
 import { useProducts } from '@features/Products/hooks/useProducts'
-import type { Product } from '@features/Products/types/product.types'
+import type { Product, ProductCreateDTO } from '@features/Products/types/product.types'
 import { formatDate, toEuro } from '@features/Products/utils/utils'
 import { Badge } from '@shared/components/Badge'
 import { Dialog } from '@shared/components/Dialog'
@@ -16,7 +17,7 @@ interface LoaderProducts {
 const ProductListPage: React.FC = () => {
   const { products } = useLoaderData<LoaderProducts>()
   const { user } = useAuth()
-  const { deleteProduct, updateProduct, isMutating } = useProducts()
+  const { addProduct, deleteProduct, updateProduct, isMutating } = useProducts()
   const dialogRef = useRef<HTMLDialogElement | null>(null)
   const [product, setProduct] = useState<Product | null>(null)
   const [action, setAction] = useState<string>()
@@ -27,11 +28,16 @@ const ProductListPage: React.FC = () => {
 
   const handleShowDialog = (
     event: React.MouseEvent<HTMLButtonElement>,
-    product: Product
+    product?: Product
   ) => {
     dialogRef.current?.showModal()
-    setProduct(product)
+    if (product) setProduct(product)
     setAction(event.currentTarget.dataset.action)
+  }
+
+  const handleShowCreateDialog = () => {
+    dialogRef.current?.showModal()
+    setAction('create')
   }
 
   const handleCloseDialog = () => {
@@ -42,8 +48,14 @@ const ProductListPage: React.FC = () => {
     await deleteProduct(product.id)
     dialogRef.current?.close()
   }
+
   const handleEdit = async (product: Product) => {
     await updateProduct(product)
+    dialogRef.current?.close()
+  }
+
+  const handleCreate = async (product: ProductCreateDTO) => {
+    await addProduct(product)
     dialogRef.current?.close()
   }
 
@@ -66,7 +78,21 @@ const ProductListPage: React.FC = () => {
             closeDialog={handleCloseDialog}
           />
         )}
+        {action === 'create' && (
+          <ProductCreateForm
+            onSubmit={handleCreate}
+            isMutating={isMutating}
+            closeDialog={handleCloseDialog}
+          />
+        )}
       </Dialog>
+      <button
+        type="button"
+        className="btn btn-primary mb-4"
+        onClick={handleShowCreateDialog}
+      >
+        New Product
+      </button>
       <table className="table-zebra table">
         <thead>
           <tr>
@@ -100,11 +126,19 @@ const ProductListPage: React.FC = () => {
               </td>
               <td>
                 {product.isOnSale ? (
-                  <Badge style="soft" color="success" size="sm">
+                  <Badge
+                    style="soft"
+                    color="success"
+                    size="sm"
+                  >
                     On sale
                   </Badge>
                 ) : (
-                  <Badge style="soft" color="ghost" size="sm">
+                  <Badge
+                    style="soft"
+                    color="ghost"
+                    size="sm"
+                  >
                     No
                   </Badge>
                 )}
