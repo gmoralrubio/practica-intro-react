@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [state, setState] = useState(initialState)
 
   useEffect(() => {
-    checkAuth()
+    checkAuth().catch(() => {})
   }, [])
 
   const login = async (email: string, password: string) => {
@@ -77,7 +77,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const checkAuth = async () => {
     setState((prev) => ({ ...prev, isLoading: true }))
     try {
-      const token = localStorage.getItem('accessToken') as string
+      const token = localStorage.getItem('accessToken')
       if (!token) {
         setState((prev) => ({
           ...prev,
@@ -94,9 +94,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     } catch (error: unknown) {
       setState((prev) => ({
         ...prev,
+        isLoading: false,
         error: error instanceof Error ? error.message : 'Unknown error',
       }))
-      throw error
     }
   }
 
