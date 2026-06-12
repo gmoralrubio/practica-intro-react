@@ -24,8 +24,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     setState((prev) => ({ ...prev, error: null, isLoading: true }))
     try {
       const token = await authRepository.loginUser(email, password)
-      localStorage.setItem('accessToken', token.accessToken)
       const user = await authRepository.getUserInfo(token.accessToken)
+      localStorage.setItem('accessToken', token.accessToken)
       setState((prev) => ({
         ...prev,
         isLoading: false,
@@ -92,6 +92,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         user,
       }))
     } catch (error: unknown) {
+      localStorage.removeItem('accessToken')
       setState((prev) => ({
         ...prev,
         isLoading: false,
