@@ -36,10 +36,10 @@ export const productRepository = {
 		const response = await fetch(`${API_URL}?_expand=user`, {
 			method: 'POST',
 			headers: {
-				'Content-Type': 'Application/json',
+				'Content-Type': 'application/json',
 				Authorization: `Bearer ${token}`,
-				body: JSON.stringify(product),
 			},
+			body: JSON.stringify(product),
 		})
 		if (!response.ok) {
 			throw new Error(`HTTP ${response.status}: ${response.statusText}`)
