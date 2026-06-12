@@ -1,8 +1,11 @@
 import { productRepository } from '@features/Products/services/productRepository'
+import { buildFilterQuery } from '@features/Products/utils/utils'
 import type { LoaderFunctionArgs } from 'react-router'
 
-export const loadProducts = async () => {
-	const products = await productRepository.getAllProducts()
+export const loadProducts = async ({ request }: LoaderFunctionArgs) => {
+	const url = new URL(request.url)
+	const query = buildFilterQuery(url.searchParams)
+	const products = await productRepository.getAllProducts(query)
 	return { products }
 }
 

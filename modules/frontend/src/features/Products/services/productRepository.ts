@@ -10,8 +10,10 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
 const API_URL = `${API_BASE_URL}/products`
 
 export const productRepository = {
-	getAllProducts: async (): Promise<Product[]> => {
-		const response = await fetch(`${API_URL}?_expand=user`)
+	getAllProducts: async (query?: string): Promise<Product[]> => {
+		const response = await fetch(
+			query ? `${API_URL}?${query}` : `${API_URL}?_expand=user`
+		)
 		if (!response.ok) {
 			throw new Error(`HTTP ${response.status}: ${response.statusText}`)
 		}

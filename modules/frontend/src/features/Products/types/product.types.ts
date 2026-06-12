@@ -1,4 +1,5 @@
-export type Tag = 'sport' | 'home' | 'tech'
+export const ALL_TAGS = ['sport', 'home', 'tech'] as const
+export type Tag = typeof ALL_TAGS[number]
 
 // Domain
 export interface Product {
