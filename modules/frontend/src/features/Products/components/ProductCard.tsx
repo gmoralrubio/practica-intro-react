@@ -1,5 +1,5 @@
 import type { Product } from '@features/Products/types/product.types'
-import { toEuro } from '@features/Products/utils/utils'
+import { toEuro } from '@features/Products/utils/product.utils'
 import { Badge } from '@shared/components/Badge'
 import { Link } from 'react-router'
 
@@ -23,7 +23,10 @@ export const ProductCard: React.FC<Props> = ({ product }) => {
         </span>
         <img
           className="aspect-square object-cover"
-          src={product.image || 'https://placehold.co/600x600?text=Image+not+provided'}
+          src={
+            product.image ||
+            'https://placehold.co/600x600?text=Image+not+provided'
+          }
           alt={product.name}
         />
       </figure>
