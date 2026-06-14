@@ -6,5 +6,5 @@ export function useToast() {
 	if (!ctx) {
 		throw new Error('useToast must be used within a ToastProvider')
 	}
-	return { showError: ctx.showError, showSuccess: ctx.showSuccess }
+	return { showError: ctx.showError, showSuccess: ctx.showSuccess, dismiss: ctx.dismiss }
 }

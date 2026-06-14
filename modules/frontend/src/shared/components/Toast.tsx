@@ -13,6 +13,15 @@ export function Toast() {
           className={`alert ${msg.type === 'error' ? 'alert-error' : 'alert-success'}`}
         >
           <span>{msg.text}</span>
+          {msg.duration === 0 && (
+            <button
+              type="button"
+              onClick={() => ctx.dismiss(msg.id)}
+              className="btn btn-ghost btn-xs ml-2"
+            >
+              x
+            </button>
+          )}
         </div>
       ))}
     </div>
