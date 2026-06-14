@@ -20,7 +20,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     checkAuth().catch(() => {})
   }, [])
 
-  const login = async (email: string, password: string) => {
+  const login = async (email: string, password: string): Promise<boolean> => {
     setState((prev) => ({ ...prev, error: null, isLoading: true }))
     try {
       const token = await authRepository.loginUser(email, password)
@@ -32,12 +32,14 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         error: null,
         user,
       }))
+      return true
     } catch (error: unknown) {
       setState((prev) => ({
         ...prev,
         isLoading: false,
         error: error instanceof Error ? error.message : 'Unknown error',
       }))
+      return false
     }
   }
 

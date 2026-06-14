@@ -1,6 +1,5 @@
 import { useAuth } from '@features/Auth/hooks/useAuth'
 import { useToast } from '@shared/hooks/useToast'
-import { parseError } from '@shared/utils/error.utils'
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router'
 
@@ -40,11 +39,9 @@ export const LoginPage: React.FC = () => {
     const email = formData.get('email') as string
     const password = formData.get('password') as string
 
-    try {
-      await login(email, password)
+    const ok = await login(email, password)
+    if (ok) {
       navigate('/')
-    } catch (e) {
-      showError(parseError(e).message)
     }
   }
 
