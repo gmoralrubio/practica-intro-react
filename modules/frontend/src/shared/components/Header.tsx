@@ -34,7 +34,7 @@ export const Header: React.FC = () => {
         ) : (
           <div className="flex items-center gap-4">
             <span className="text-sm text-white">
-              Bienvenido {user?.username}
+              Welcome {user?.username}
             </span>
             <div className="space-x-4">
               <button
@@ -48,7 +48,7 @@ export const Header: React.FC = () => {
                 to="/products"
                 className="btn btn-primary"
               >
-                Mis productos
+                My products
               </NavLink>
             </div>
           </div>

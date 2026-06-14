@@ -23,7 +23,7 @@ export const RegisterPage: React.FC = () => {
     passwordConfirmation: '',
   })
 
-  // Detect login result after signup succeeds (login no longer throws)
+  // Detecta el resultado del login tras un signup exitoso
   useEffect(() => {
     if (loginAfterSignupRef.current && !isLoading) {
       loginAfterSignupRef.current = false
@@ -60,11 +60,11 @@ export const RegisterPage: React.FC = () => {
 
     try {
       await signup(email, password)
-      // Signup succeeded — trigger login
+      // Signup exitoso — lanza login
       loginAfterSignupRef.current = true
       await login(email, password)
     } catch (e) {
-      // Signup failed (signup still throws)
+      // Signup fallido (signup sigue lanzando)
       showError(parseError(e).message)
     }
   }
@@ -101,14 +101,14 @@ export const RegisterPage: React.FC = () => {
             htmlFor="password"
             className="label"
           >
-            Contraseña
+            Password
           </label>
           <input
             type="password"
             name="password"
             id="password"
             className="input"
-            placeholder="Contraseña"
+            placeholder="Password"
             minLength={6}
             required
             value={formData.password}
@@ -121,14 +121,14 @@ export const RegisterPage: React.FC = () => {
             htmlFor="password-confirmation"
             className="label"
           >
-            Confirma contraseña
+            Confirm password
           </label>
           <input
             type="password"
             name="passwordConfirmation"
             id="password-confirmation"
             className="input"
-            placeholder="Contraseña"
+            placeholder="Password"
             minLength={6}
             required
             value={formData.passwordConfirmation}
@@ -144,14 +144,14 @@ export const RegisterPage: React.FC = () => {
           type="submit"
           disabled={isLoading ? true : false}
         >
-          {isLoading ? 'Iniciando sesión...' : 'Iniciar sesión'}
+          {isLoading ? 'Creating account...' : 'Sign up'}
         </button>
         <button
           type="button"
           className="btn btn-ghost mt-1"
           onClick={() => navigate('/')}
         >
-          Volver
+          Back
         </button>
       </form>
     </div>

@@ -79,14 +79,14 @@ export const LoginPage: React.FC = () => {
             htmlFor="password"
             className="label"
           >
-            Contraseña
+            Password
           </label>
           <input
             type="password"
             name="password"
             id="password"
             className="input"
-            placeholder="Contraseña"
+            placeholder="Password"
             minLength={6}
             required
             value={formData.password}
@@ -99,14 +99,14 @@ export const LoginPage: React.FC = () => {
           type="submit"
           disabled={isLoading ? true : false}
         >
-          {isLoading ? 'Iniciando sesión...' : 'Iniciar sesión'}
+          {isLoading ? 'Signing in...' : 'Sign in'}
         </button>
         <button
           type="button"
           className="btn btn-ghost mt-1"
           onClick={() => navigate('/products')}
         >
-          Volver
+          Back
         </button>
       </form>
     </div>

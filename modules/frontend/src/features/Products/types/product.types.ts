@@ -1,7 +1,7 @@
 export const ALL_TAGS = ['sport', 'home', 'tech'] as const
 export type Tag = typeof ALL_TAGS[number]
 
-// Domain
+// Dominio
 export interface Product {
 	id: string
 	name: string

@@ -26,7 +26,7 @@ const ProductDetailPage: React.FC = () => {
             >
               <use href="/icons.svg#back-arrow"></use>
             </svg>
-            Volver al listado
+            Back to list
           </button>
         </div>
       </div>
@@ -60,7 +60,7 @@ const ProductDetailPage: React.FC = () => {
                       color="secondary"
                       size="lg"
                     >
-                      Oferta
+                      Sale
                     </Badge>
                   )}
                 </div>
@@ -76,7 +76,7 @@ const ProductDetailPage: React.FC = () => {
                 </div>
 
                 <div className="mb-6">
-                  <h2 className="text-md mb-2 font-medium">Descripción</h2>
+                  <h2 className="text-md mb-2 font-medium">Description</h2>
                   <p className="text-base-content/80 leading-relaxed">
                     {product.description}
                   </p>
@@ -95,11 +95,11 @@ const ProductDetailPage: React.FC = () => {
                 <div className="divider"></div>
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   <div>
-                    <p className="text-base-content/60">Propietario</p>
+                    <p className="text-base-content/60">Owner</p>
                     <p className="font-semibold">{product.username}</p>
                   </div>
                   <div>
-                    <p className="text-base-content/60">Publicado</p>
+                    <p className="text-base-content/60">Published</p>
                     <p className="font-semibold">
                       {formatDate(product.updatedAt)}
                     </p>
