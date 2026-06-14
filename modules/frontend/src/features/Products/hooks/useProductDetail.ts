@@ -1,35 +1,12 @@
-import { productRepository } from '@features/Products/services/productRepository'
 import type { Product } from '@features/Products/types/product.types'
-import { useEffect, useState } from 'react'
+import { useLoaderData } from 'react-router'
 
-export interface UseProductDetail {
+export interface ProductDetailData {
 	product: Product | null
-	error: Error | null
-	isLoading: boolean
+	error: string | null
 }
 
-export const useProductDetail = (id: string): UseProductDetail => {
-	const [product, setProduct] = useState<Product | null>(null)
-	const [error, setError] = useState<Error | null>(null)
-	const [isLoading, setIsLoading] = useState<boolean>(false)
-
-	useEffect(() => {
-		const loadProduct = async (): Promise<void> => {
-			try {
-				const product = await productRepository.getProductById(id)
-				setProduct(product)
-			} catch (error) {
-				setError(
-					error instanceof Error ? error : new Error('Error unknown')
-				)
-				console.log(
-					error instanceof Error ? error.message : String(error)
-				)
-			}
-			setIsLoading(false)
-		}
-		loadProduct()
-	}, [id])
-
-	return { product, error, isLoading }
+// Envuelve useLoaderData con acceso tipado a { product, error }.
+export function useProductDetail(): ProductDetailData {
+	return useLoaderData<ProductDetailData>()
 }

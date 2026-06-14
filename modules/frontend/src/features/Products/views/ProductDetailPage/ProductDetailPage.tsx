@@ -1,15 +1,39 @@
-import type { Product } from '@features/Products/types/product.types'
-import { formatDate, toEuro } from '@features/Products/utils/utils'
+import { useProductDetail } from '@features/Products/hooks/useProductDetail'
+import { formatDate, toEuro } from '@features/Products/utils/product.utils'
 import { Badge } from '@shared/components/Badge'
-import { useLoaderData, useNavigate } from 'react-router'
-
-interface LoaderProductDetails {
-  product: Product
-}
+import { useNavigate } from 'react-router'
 
 const ProductDetailPage: React.FC = () => {
   const navigate = useNavigate()
-  const { product } = useLoaderData<LoaderProductDetails>()
+  const { product, error } = useProductDetail()
+
+  if (error) {
+    return (
+      <div className="my-20">
+        <div className="alert alert-error">
+          <span>{error}</span>
+        </div>
+        <div className="mt-6">
+          <button
+            type="button"
+            onClick={() => navigate('/')}
+            className="btn btn-ghost"
+          >
+            <svg
+              className="h-5 w-5"
+              role="presentation"
+              aria-hidden="true"
+            >
+              <use href="/icons.svg#back-arrow"></use>
+            </svg>
+            Volver al listado
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  if (!product) return null
 
   return (
     <>
@@ -18,7 +42,10 @@ const ProductDetailPage: React.FC = () => {
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
             <div className="flex justify-center">
               <img
-                src={product.image || 'https://placehold.co/600x600?text=Image+not+provided'}
+                src={
+                  product.image ||
+                  'https://placehold.co/600x600?text=Image+not+provided'
+                }
                 alt={product.name}
                 className="aspect-square rounded-lg object-cover"
               />

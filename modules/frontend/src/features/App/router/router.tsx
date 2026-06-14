@@ -27,7 +27,6 @@ export const router = createBrowserRouter([
         path: '/:productId',
         loader: loadProductDetail,
         HydrateFallback: ProductDetailLoadingPage,
-        errorElement: <p>Error al cargar el producto</p>,
         element: <ProductDetailPage />,
       },
       {

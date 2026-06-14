@@ -1,5 +1,6 @@
 import type { AccessToken } from '@features/Auth/types/auth.type'
 import type { User } from '@features/Auth/types/user.type'
+import { parseErrorResponse } from '@shared/utils/error.utils'
 
 const API_BASE_URL = import.meta.env.VITE_AUTH_BASE_URL
 export const authRepository = {
@@ -21,7 +22,7 @@ export const authRepository = {
 		})
 
 		if (!response.ok) {
-			throw new Error('Login failed. Please check your credentials.')
+			await parseErrorResponse(response, 'Login failed. Please check your credentials.')
 		}
 
 		const token: AccessToken = await response.json()
@@ -43,7 +44,7 @@ export const authRepository = {
 		})
 
 		if (!response.ok) {
-			throw new Error('Signup failed.')
+			await parseErrorResponse(response, 'Signup failed.')
 		}
 
 		const data = await response.json()
@@ -66,7 +67,7 @@ export const authRepository = {
 		})
 
 		if (!response.ok) {
-			throw new Error('Error getting user info')
+			await parseErrorResponse(response, 'Error getting user info')
 		}
 		const user = await response.json()
 		return user

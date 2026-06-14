@@ -3,11 +3,15 @@ import { ProductCreateForm } from '@features/Products/components/ProductCreateFo
 import { ProductDeleteForm } from '@features/Products/components/ProductDeleteForm'
 import { ProductEditForm } from '@features/Products/components/ProductEditForm'
 import { useProducts } from '@features/Products/hooks/useProducts'
-import type { Product, ProductCreateDTO } from '@features/Products/types/product.types'
-import { formatDate, toEuro } from '@features/Products/utils/utils'
+import type {
+  Product,
+  ProductCreateDTO,
+} from '@features/Products/types/product.types'
+import { formatDate, toEuro } from '@features/Products/utils/product.utils'
 import { Badge } from '@shared/components/Badge'
 import { Dialog } from '@shared/components/Dialog'
-import { useRef, useState } from 'react'
+import { useToast } from '@shared/hooks/useToast'
+import { useRef, useState, useEffect } from 'react'
 import { useLoaderData } from 'react-router'
 
 interface LoaderProducts {
@@ -17,10 +21,18 @@ interface LoaderProducts {
 const ProductListPage: React.FC = () => {
   const { products } = useLoaderData<LoaderProducts>()
   const { user } = useAuth()
-  const { addProduct, deleteProduct, updateProduct, isMutating } = useProducts()
+  const { addProduct, deleteProduct, updateProduct, isMutating, error } =
+    useProducts()
+  const { showError } = useToast()
   const dialogRef = useRef<HTMLDialogElement | null>(null)
   const [product, setProduct] = useState<Product | null>(null)
   const [action, setAction] = useState<string>()
+
+  useEffect(() => {
+    if (error) {
+      showError(error)
+    }
+  }, [error, showError])
 
   const userProducts = products.filter(
     (product) => product.userId === Number(user?.id)

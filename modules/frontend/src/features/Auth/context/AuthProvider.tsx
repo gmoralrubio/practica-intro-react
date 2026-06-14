@@ -38,7 +38,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         isLoading: false,
         error: error instanceof Error ? error.message : 'Unknown error',
       }))
-      throw error
     }
   }
 
@@ -91,12 +90,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         isLoading: false,
         user,
       }))
-    } catch (error: unknown) {
+    } catch {
       localStorage.removeItem('accessToken')
       setState((prev) => ({
         ...prev,
         isLoading: false,
-        error: error instanceof Error ? error.message : 'Unknown error',
       }))
     }
   }

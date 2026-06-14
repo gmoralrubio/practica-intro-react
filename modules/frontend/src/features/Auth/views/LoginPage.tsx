@@ -1,5 +1,7 @@
 import { useAuth } from '@features/Auth/hooks/useAuth'
-import { useState } from 'react'
+import { useToast } from '@shared/hooks/useToast'
+import { parseError } from '@shared/utils/error.utils'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router'
 
 interface FormState {
@@ -11,11 +13,18 @@ export const LoginPage: React.FC = () => {
   const navigate = useNavigate()
 
   const { isLoading, error, login } = useAuth()
+  const { showError } = useToast()
 
   const [formData, setFormData] = useState<FormState>({
     email: '',
     password: '',
   })
+
+  useEffect(() => {
+    if (error) {
+      showError(error)
+    }
+  }, [error, showError])
 
   const updateFormField = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target
@@ -34,13 +43,13 @@ export const LoginPage: React.FC = () => {
     try {
       await login(email, password)
       navigate('/')
-    } catch {}
+    } catch (e) {
+      showError(parseError(e).message)
+    }
   }
 
   return (
     <div className="my-20 flex justify-center">
-      {error && <p>{error}</p>}
-      {isLoading && <p>Loading...</p>}
       <form
         className="fieldset bg-base-200 border-base-300 rounded-box h-fit w-xs border p-4"
         onSubmit={handleSubmit}

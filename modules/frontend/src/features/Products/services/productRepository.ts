@@ -5,6 +5,7 @@ import type {
 	ProductResponseDTO,
 	ProductUpdateDTO,
 } from '@features/Products/types/product.types'
+import { parseErrorResponse } from '@shared/utils/error.utils'
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
 const API_URL = `${API_BASE_URL}/products`
@@ -15,7 +16,7 @@ export const productRepository = {
 			query ? `${API_URL}?${query}` : `${API_URL}?_expand=user`
 		)
 		if (!response.ok) {
-			throw new Error(`HTTP ${response.status}: ${response.statusText}`)
+			await parseErrorResponse(response, `HTTP ${response.status}`)
 		}
 
 		const data = await response.json()
@@ -25,7 +26,7 @@ export const productRepository = {
 	getProductById: async (id: string): Promise<Product> => {
 		const response = await fetch(`${API_URL}/${id}?_expand=user`)
 		if (!response.ok) {
-			throw new Error(`HTTP ${response.status}: ${response.statusText}`)
+			await parseErrorResponse(response, `HTTP ${response.status}`)
 		}
 		const data: ProductResponseDTO = await response.json()
 		return mapProduct(data)
@@ -44,7 +45,7 @@ export const productRepository = {
 			body: JSON.stringify(product),
 		})
 		if (!response.ok) {
-			throw new Error(`HTTP ${response.status}: ${response.statusText}`)
+			await parseErrorResponse(response, `HTTP ${response.status}`)
 		}
 		const data: ProductResponseDTO = await response.json()
 		return mapProduct(data)
@@ -64,7 +65,7 @@ export const productRepository = {
 			body: JSON.stringify(product),
 		})
 		if (!response.ok) {
-			throw new Error(`HTTP ${response.status}: ${response.statusText}`)
+			await parseErrorResponse(response, `HTTP ${response.status}`)
 		}
 		const data: ProductResponseDTO = await response.json()
 		return mapProduct(data)
@@ -79,7 +80,7 @@ export const productRepository = {
 			},
 		})
 		if (!response.ok) {
-			throw new Error(`HTTP ${response.status}: ${response.statusText}`)
+			await parseErrorResponse(response, `HTTP ${response.status}`)
 		}
 	},
 }

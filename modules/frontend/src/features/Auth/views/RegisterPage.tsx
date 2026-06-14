@@ -1,5 +1,7 @@
 import { useAuth } from '@features/Auth/hooks/useAuth'
-import { useState } from 'react'
+import { useToast } from '@shared/hooks/useToast'
+import { parseError } from '@shared/utils/error.utils'
+import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router'
 
 interface FormState {
@@ -12,12 +14,27 @@ export const RegisterPage: React.FC = () => {
   const navigate = useNavigate()
   const [passwordMatches, setPasswordMatches] = useState<boolean>(true)
   const { isLoading, error, signup, login } = useAuth()
+  const { showError, showSuccess } = useToast()
+  const loginAfterSignupRef = useRef(false)
 
   const [formData, setFormData] = useState<FormState>({
     email: '',
     password: '',
     passwordConfirmation: '',
   })
+
+  // Detect login result after signup succeeds (login no longer throws)
+  useEffect(() => {
+    if (loginAfterSignupRef.current && !isLoading) {
+      loginAfterSignupRef.current = false
+      if (error) {
+        showSuccess('Account created! Please log in.')
+        navigate('/auth/login')
+      } else {
+        navigate('/')
+      }
+    }
+  }, [isLoading, error, showSuccess, navigate])
 
   const updateFormField = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target
@@ -36,10 +53,19 @@ export const RegisterPage: React.FC = () => {
 
     if (password !== passwordConfirmation) {
       setPasswordMatches(false)
-    } else {
+      return
+    }
+
+    setPasswordMatches(true)
+
+    try {
       await signup(email, password)
+      // Signup succeeded — trigger login
+      loginAfterSignupRef.current = true
       await login(email, password)
-      navigate('/')
+    } catch (e) {
+      // Signup failed (signup still throws)
+      showError(parseError(e).message)
     }
   }
 

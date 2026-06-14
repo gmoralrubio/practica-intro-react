@@ -1,5 +1,5 @@
 import { productRepository } from '@features/Products/services/productRepository'
-import { buildFilterQuery } from '@features/Products/utils/utils'
+import { buildFilterQuery } from '@features/Products/utils/product.utils'
 import type { LoaderFunctionArgs } from 'react-router'
 
 export const loadProducts = async ({ request }: LoaderFunctionArgs) => {
@@ -11,9 +11,16 @@ export const loadProducts = async ({ request }: LoaderFunctionArgs) => {
 
 export const loadProductDetail = async ({ params }: LoaderFunctionArgs) => {
 	const productId = params.productId
-	if (!productId) throw new Error('Product ID is required')
+	if (!productId) {
+		return { product: null, error: 'Product ID is required' }
+	}
 
-	const product = await productRepository.getProductById(productId)
-
-	return { product }
+	try {
+		const product = await productRepository.getProductById(productId)
+		return { product, error: null }
+	} catch (e: unknown) {
+		const message =
+			e instanceof Error ? e.message : 'Failed to load product'
+		return { product: null, error: message }
+	}
 }
